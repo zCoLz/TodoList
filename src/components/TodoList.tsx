@@ -75,15 +75,19 @@ const TodoList = () => {
     try {
       const key = Object.keys(data)[index];
       const todoRef = child(dbRef, `todo/${key}`);
-      await remove(todoRef);
-      window.alert('Delete Successful!');
-      setIsValue(true);
+      const shouldDelete = window.confirm(
+        'Are you sure you want to delete this todo?'
+      );
+      if (shouldDelete) {
+        await remove(todoRef);
+        setIsValue(true);
+        window.alert('Delete Successful!');
+      }
     } catch (error) {
       console.error(error);
       window.alert('Delete Failed!');
     }
   }
-
   return (
     <>
       <Card className='bg-slate-200 w-[30rem] h-[40rem] border-none drop-shadow-lg'>
